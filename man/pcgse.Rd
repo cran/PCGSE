@@ -16,7 +16,7 @@ The statistical significance of each gene set test statistic is computed accordi
 either a parametric test, a correlation-adjusted parametric test or a permutation test.
 }
 \usage{
-    pcgse(data, prcomp.output=NA, pc.indexes=1, gene.sets, gene.statistic="z",
+    pcgse(data, prcomp.output, pc.indexes=1, gene.sets, gene.statistic="z",
         transformation="none", gene.set.statistic="mean.diff", 
         gene.set.test="cor.adj.parametric", nperm=9999)    
 }

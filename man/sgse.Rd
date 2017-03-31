@@ -10,7 +10,7 @@ PC variance or the PC variance scaled by the lower-tailed p-value calculated for
 to the Tracey-Widom distribution.
 }
 \usage{
-    sgse(data, prcomp.output=NA, gene.sets, 
+    sgse(data, prcomp.output, gene.sets, 
          gene.statistic="z", transformation="none", 
          gene.set.statistic="mean.diff", gene.set.test="cor.adj.parametric", 
          nperm=999, pc.selection.method="all", pc.indexes=NA, rmt.alpha=.05, 

@@ -43,7 +43,7 @@ library(RMTstat)
 #      sgse: Vector of combined p-values for all PCs identified by pc.indexes.
 #      weights: Vector of PC-specific weights for the PCs in pc.indexes.
 #
-sgse = function(data, prcomp.output=NA, gene.sets, 
+sgse = function(data, prcomp.output, gene.sets, 
     gene.statistic="z", transformation="none", 
     gene.set.statistic="mean.diff", gene.set.test="cor.adj.parametric", nperm=999,
     pc.selection.method="all", pc.indexes=NA, rmt.alpha=.05, pcgse.weight="rmt.scaled.var") {
@@ -56,14 +56,14 @@ sgse = function(data, prcomp.output=NA, gene.sets,
   if (!(pcgse.weight %in% c("variance", "rmt.scaled.var"))) {
     stop("pcgse.weight must be one of 'rmt.scaled.var' or 'variance'")
   }    
-  if (is.na(data)) {
+  if (missing(data)) {
     stop("'data must' be specified!")
   }
-  if (is.na(gene.sets)) {
+  if (missing(gene.sets)) {
     stop("gene.sets must be specified!")
   }
   # Compute PCA if necessary 
-  if (is.na(prcomp.output)) {    
+  if (missing(prcomp.output)) {    
     prcomp.output=prcomp(data, center=T, scale=T)
   }      
   
@@ -159,11 +159,11 @@ pcRMT = function(prcomp.output) {
 #   method: either "weighted.Z" or "fisher"
 #   weights: vector of weights to use with weighted Z-method
 #
-combinePValues = function(p.values, method="weighted.Z", weights=NA) {    
+combinePValues = function(p.values, method="weighted.Z", weights) {    
   if (!(method == "fisher" | method == "weighted.Z")) {
     stop("Method must be either 'fisher' or 'weighted.Z'")
   }  
-  if (is.na(weights) & method == "weighted.Z") {
+  if (missing(weights) & method == "weighted.Z") {
     stop("Weights must be specified for weighted Z-method!")
   }
   

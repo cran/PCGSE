@@ -81,7 +81,7 @@ library(safe)
 #             Elements are the gene set test statistics for each gene set.
 #
 pcgse = function(data, 
-    prcomp.output=NA, 
+    prcomp.output, 
     pc.indexes=1, 
     gene.sets,
     gene.statistic="z",
@@ -92,10 +92,10 @@ pcgse = function(data,
 ) {
   current.warn = getOption("warn")
   options(warn=-1)
-  if (is.na(data)) {
+  if (missing(data)) {
     stop("'data must' be specified!")
   }  
-  if (is.na(gene.sets)) {
+  if (missing(gene.sets)) {
     stop("'gene.sets' must be specified!")
   }   
   options(warn=current.warn) 
@@ -133,7 +133,7 @@ pcgse = function(data,
   }
   
   # Compute PCA if necessary
-  if (is.na(prcomp.output)) {
+  if (missing(prcomp.output)) {
     # Center and scale so that PCA is performed on correlation matrix
     prcomp.output=prcomp(data, scale=T)
   }
