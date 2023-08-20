@@ -1,0 +1,5 @@
+Changes in PCGSE v0.5.0 
+========================
+
+* Removed dependency on R package 'safe', which is no longer available. This also disables the 'permutation' option for pcgse().
+* Made version in DESCRIPTION consistent with version in package documentation file.

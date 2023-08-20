@@ -12,8 +12,8 @@ experimental data.
 \tabular{ll}{
 Package: \tab PCGSE\cr
 Type: \tab Package\cr
-Version: \tab 0.1\cr
-Date: \tab 2014-03\cr
+Version: \tab 0.4.1\cr
+Date: \tab 2023-08\cr
 License: \tab GPL-3 \cr
 }
 Principal component gene set enrichment is performed using the function \code{pcgse}. 

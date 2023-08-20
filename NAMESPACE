@@ -1,5 +1,4 @@
 export(pcgse, sgse)
-importFrom(safe, safe)
 importFrom(MASS, mvrnorm)
 importFrom(RMTstat, WishartMaxPar)
 importFrom("methods", "slot")

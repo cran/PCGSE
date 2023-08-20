@@ -7,8 +7,6 @@
 # Copyright (C) Dartmouth College
 #
 
-library(safe)
-
 #-------------------------------------------------------------------------------------------------------------------------------
 # Public methods
 #-------------------------------------------------------------------------------------------------------------------------------
@@ -162,8 +160,9 @@ pcgse = function(data,
           gene.statistics=gene.statistics, cor.adjustment=(gene.set.test == "cor.adj.parametric"))
     }     
   } else if (gene.set.test == "permutation") {
-    results = pcgseViaSAFE(data=data, prcomp.output=prcomp.output, pc.indexes=pc.indexes, gene.set.indexes=gene.set.indexes, 
-        gene.statistic=gene.statistic, transformation=transformation, gene.set.statistic=gene.set.statistic, nperm=nperm)        
+    stop("R package 'safe' no longer available so permutation method not supported.")
+    #results = pcgseViaSAFE(data=data, prcomp.output=prcomp.output, pc.indexes=pc.indexes, gene.set.indexes=gene.set.indexes, 
+    #    gene.statistic=gene.statistic, transformation=transformation, gene.set.statistic=gene.set.statistic, nperm=nperm)        
   }
 
   return (results) 
@@ -325,43 +324,43 @@ global.StandAveDiff = function(C.mat,local.stats,...) {
       })
 }
 
-pcgseViaSAFE = function(data, prcomp.output, pc.indexes, gene.set.indexes, gene.statistic, transformation, gene.set.statistic, nperm=999) {
-  num.gene.sets = nrow(gene.set.indexes)
-  n= nrow(data)
-  p.values = matrix(0, nrow=num.gene.sets, ncol=length(pc.indexes))
-  rownames(p.values) = names(gene.set.indexes)
-  gene.set.statistics = matrix(T, nrow=num.gene.sets, ncol=length(pc.indexes))    
-  rownames(gene.set.statistics) = names(gene.set.indexes)  
-  
-  for (j in 1:length(pc.indexes)) {
-    pc.index = pc.indexes[j]
-    pc = prcomp.output$x[,pc.index]
-    global="AveDiff"
-    if (gene.set.statistic == "rank.sum") {
-      global="Wilcoxon"
-    } else {
-      global="StandAveDiff"
-    }
-    safe.results = safe(X.mat=t(data), y.vec=pc, C.mat=t(gene.set.indexes), local="GeneStatistics", global=global, Pi.mat=nperm,
-        args.global=list(one.sided=T), args.local=list(gene.statistic=gene.statistic, transformation=transformation), alpha=1.01, print.it = FALSE)
-    p.values[,j] = slot(safe.results, "global.pval")
-    gene.set.statistics[,j] = slot(safe.results, "global.stat")    
-  }
-  
-  # Turn one-sided p-values into two-sided p-values
-  p.values = apply(p.values, c(1,2), function(x) {
-        upper = 1 - x
-        lower = x
-        return (2*min(upper, lower))
-      })
-  
-  # Build the result list
-  results = list()
-  results$p.values = p.values
-  results$statistics = gene.set.statistics  
-  
-  return (results)
-}
+# pcgseViaSAFE = function(data, prcomp.output, pc.indexes, gene.set.indexes, gene.statistic, transformation, gene.set.statistic, nperm=999) {
+#   num.gene.sets = nrow(gene.set.indexes)
+#   n= nrow(data)
+#   p.values = matrix(0, nrow=num.gene.sets, ncol=length(pc.indexes))
+#   rownames(p.values) = names(gene.set.indexes)
+#   gene.set.statistics = matrix(T, nrow=num.gene.sets, ncol=length(pc.indexes))    
+#   rownames(gene.set.statistics) = names(gene.set.indexes)  
+#   
+#   for (j in 1:length(pc.indexes)) {
+#     pc.index = pc.indexes[j]
+#     pc = prcomp.output$x[,pc.index]
+#     global="AveDiff"
+#     if (gene.set.statistic == "rank.sum") {
+#       global="Wilcoxon"
+#     } else {
+#       global="StandAveDiff"
+#     }
+#     safe.results = safe(X.mat=t(data), y.vec=pc, C.mat=t(gene.set.indexes), local="GeneStatistics", global=global, Pi.mat=nperm,
+#         args.global=list(one.sided=T), args.local=list(gene.statistic=gene.statistic, transformation=transformation), alpha=1.01, print.it = FALSE)
+#     p.values[,j] = slot(safe.results, "global.pval")
+#     gene.set.statistics[,j] = slot(safe.results, "global.stat")    
+#   }
+#   
+#   # Turn one-sided p-values into two-sided p-values
+#   p.values = apply(p.values, c(1,2), function(x) {
+#         upper = 1 - x
+#         lower = x
+#         return (2*min(upper, lower))
+#       })
+#   
+#   # Build the result list
+#   results = list()
+#   results$p.values = p.values
+#   results$statistics = gene.set.statistics  
+#   
+#   return (results)
+# }
 
 #-------------------------------------------------------------------------------------------------------------------------------
 # Internal methods - Enrichment via Wilcoxon Mann Whitney or correlation-adjusted WMW
